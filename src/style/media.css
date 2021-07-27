@@ -1,0 +1,17 @@
+
+@media screen and (max-width : 800px){
+   .diary{
+        font-size: 13px;
+
+   }
+   .diary span{
+       width : 80px;
+   }
+   textarea:{
+       width : 10px;
+   }
+    #writeForm textarea{
+        width: 300px;
+    }
+}
+
