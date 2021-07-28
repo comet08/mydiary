@@ -22,10 +22,10 @@ export default function List({$app, initialState, writing, viewing}){
                 if(node.color === "#ffffff")
                     fontColor = "black";
                 return`
-                <div class="diary" data-index="${index}" style="background-color : ${node.color}; color : ${fontColor}">
-                <span>${node.title}</span>
-                <span>${node.date}</span>
-                <span>${node.time}</span>
+                <div class="diaryList" data-index="${index}" style="background-color : ${node.color}; color : ${fontColor}">
+                <span id="title" data-index="${index}">${node.title}</span>
+                <span id="date" data-index="${index}">${node.date}</span>
+                <span id="time" data-index="${index}">${node.time}</span>
                 </div>
                 `
             }).join('');
@@ -39,7 +39,7 @@ export default function List({$app, initialState, writing, viewing}){
             this.$target.addEventListener('click', (e)=>{
                
                 e.stopPropagation();
-                if(e.target.id==="writing") return;
+                if(e.target.id==="writing" || e.target.className==="diary_container") return;
                 const { index } = e.target.dataset;
                 this.viewing(index);
             })

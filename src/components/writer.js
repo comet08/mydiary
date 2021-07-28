@@ -43,6 +43,7 @@ export default function Writer({$app, initialState, onSubmit, formOff}){
             <label for="color"> 오늘의 색 </label> <input type="color" name="color" id="color">
             <label for="content"> 내용 </label> <textarea id="content" name="content"> </textarea> </label>
             <input type="submit" value="submit">
+            <span>❌ESC❌</span>
             </form>
             `
 

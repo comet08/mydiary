@@ -10,7 +10,7 @@ export default function App($app){
         list : [],
         isWriting : false,
         user : null,
-        selectedDiary : false
+        selectedDiary : null
     }
 
     this.$target = document.createElement('div');
@@ -50,7 +50,11 @@ export default function App($app){
         viewing : (index) => {
             this.setState({
                 ...this.state,
-                selectedDiary : this.state.list[index]
+                selectedDiary : 
+                {
+                    index : index,
+                    diary : this.state.list[index]
+                }     
             })
         }
     })
@@ -88,6 +92,18 @@ export default function App($app){
                 ...this.state,
                 selectedDiary : null,
             })
+        },
+        onDelete : (index)=>{
+            let newList = this.state.list;
+            newList.splice(index,1);
+
+
+            localStorage.setItem('diary', JSON.stringify(newList));
+            this.setState({
+                ...this.state,
+                list : newList
+            })
+
         }
     })
 
@@ -109,6 +125,10 @@ export default function App($app){
         this.diaryview.setState(this.state.selectedDiary);
     }
 
+    const setUser = (name) =>{
+        document.querySelector("#title").innerHTML = `${name}'s Diary`
+    }
+
 
     const init = () =>{
         this.setState({
@@ -124,6 +144,8 @@ export default function App($app){
             })
             return;
         }
+
+        setUser(user);
 
         let diarys = JSON.parse(localStorage.getItem('diary'));
         if(!diarys) diarys = [];
