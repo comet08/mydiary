@@ -20,9 +20,31 @@ h1{
     margin-top: 20px;
 }
 
-#login{
-    text-align: center;
+.app #login{
+    margin-top: 100px;
+}
 
+#loginForm{
+    justify-content: center;
+    text-align: center;
+    display : grid;
+    grid-template-areas: 
+    'input',
+    'button';
+    grid-template-rows: 50% 50%;
+    justify-items: center;
+}
+
+#loginInput{
+    font-size: 30px;
+    padding : 15px 5px 15px 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    border : 0;
+    border-radius: 2em;
+    background-color: rgba(69, 85, 175, 0.5);
+    color : white;
+    grid-area: 'input';
 }
 
 #clock{

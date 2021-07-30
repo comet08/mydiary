@@ -14,7 +14,7 @@ export default function List({$app, initialState, writing, viewing}){
     }
 
     this.render = () =>{
-        let display = !this.state.isWriting && !this.state.isViewing;
+        let display = !this.state.isWriting && !this.state.isViewing && this.state.user;
 
         if(display){
             let listTemplate =  this.state.list.map((node, index)=>{

@@ -34,6 +34,20 @@ export default function Writer({$app, initialState, onSubmit, formOff}){
         }
     }
 
+    this.submit = (e)=>{
+        e.preventDefault();
+        document.querySelector('#writeForm').removeEventListener('submit', this.submit, false);
+        const { title, color, content } = e.target;
+        let data = {
+            date : this.getDate(),
+            time : this.getTime(),
+            title : title.value,
+            color : color.value,
+            content : content.value
+        }
+        this.onSubmit(data);
+    }
+
     this.render = () =>{
 
         if(this.state.isWriting){
@@ -47,25 +61,13 @@ export default function Writer({$app, initialState, onSubmit, formOff}){
             </form>
             `
 
-            document.querySelector('#writeForm').addEventListener('submit', (e)=>{
-                e.preventDefault();
-                const { title, color, content } = e.target;
-                let data = {
-                    date : this.getDate(),
-                    time : this.getTime(),
-                    title : title.value,
-                    color : color.value,
-                    content : content.value
-                }
-                this.onSubmit(data);
-            })
-
+            document.querySelector('#writeForm').addEventListener('submit', this.submit, false);
             window.addEventListener('keyup', this.onPress, false);
         }
         
 
-
-
         this.$target.style.display = this.state.isWriting ? "block" : "none";
     }
+
+    
 }

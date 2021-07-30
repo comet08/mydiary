@@ -11,20 +11,22 @@ export default function Login({$app, initialState, onLogin}){
         this.render();
     }
 
+    this.onSubmit = (e)=>{
+        e.preventDefault();
+        const {name} = e.target;
+        console.log(name.value);
+        document.querySelector('#loginForm')?.removeEventListener('submit', this.onSubmit, false);
+        this.onLogin(name.value); 
+    }
+
     this.render = () =>{
         this.$target.innerHTML = `
         <form id="loginForm">
-        <input id="loginInput" type="text" placeholder="what's your name?" required />
-        <input type="submit" value="submit">
+        <input id="loginInput" type="text" name="name" placeholder="what's your name?" required />
+        <input type="submit" value="Register">
         </form>
         `
-        if(this.state){
-            document.querySelector('#loginForm').addEventListener('submit', (e)=>{
-                e.preventDefault();
-                const username = document.querySelector('#loginForm #loginInput').value;
-                this.onLogin(username);
-            })
-        }
-        this.$target.style.display = this.state ? "block" : "none";   
+        this.$target.style.display = !this.state ? "block" : "none"; 
+        document.querySelector('#loginForm')?.addEventListener('submit', this.onSubmit, false);
     }
 }

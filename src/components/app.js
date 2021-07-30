@@ -9,8 +9,8 @@ export default function App($app){
         isLoading : false,
         list : [],
         isWriting : false,
-        user : null,
-        selectedDiary : null
+        user : false,
+        selectedDiary : null,
     }
 
     this.$target = document.createElement('div');
@@ -24,13 +24,15 @@ export default function App($app){
     });
     this.login = new Login({
         $app,
-        initialState : !this.state.loggedIn,
+        initialState : this.state.user,
         onLogin : (username) =>{
+            console.log(username);
             localStorage.setItem('user', username);
             this.setState({
                 ...this.state,
                 user : username,
             })
+            init();
         }
     })
 
@@ -39,7 +41,8 @@ export default function App($app){
         initialState : {
             list : this.state.list,
             isViewing : this.state.selectedDiary,
-            isWriting : this.state.isWriting
+            isWriting : this.state.isWriting,
+            user : this.state.user
         },
         writing : () =>{
             this.setState({
@@ -64,7 +67,6 @@ export default function App($app){
     this.writer = new Writer({
         $app,
         initialState : {
-            user : this.state.user,
             isWriting : this.state.isWriting,
         },
         onSubmit : ( diary ) =>{
@@ -110,17 +112,18 @@ export default function App($app){
    
 
     this.setState = (nextState) =>{
+       
         this.state = nextState;
         this.loading.setState(this.state.isLoading);
-        this.login.setState(!this.state.user);
+        this.login.setState(this.state.user);
         this.writer.setState({
-            user : this.state.user,
-            isWriting : this.state.isWriting
+            isWriting : this.state.isWriting,
         })
         this.list.setState({
             list : this.state.list,
             isViewing : this.state.selectedDiary,
-            isWriting : this.state.isWriting
+            isWriting : this.state.isWriting,
+            user : this.state.user
         })
         this.diaryview.setState(this.state.selectedDiary);
     }
@@ -136,7 +139,7 @@ export default function App($app){
             isLoading : true
         })
         const user = localStorage.getItem('user');
-       
+
         if(!user){
             this.setState({
                 ...this.state,
